@@ -2,6 +2,9 @@ let time = 0
 let timeset = 10
 let isPaused = false
 
+let windWidth = 600
+let windHeight = 600
+
 class Disc {
 	constructor(tempC, outRadius, inRadius, noDots, dotRaidus, speed, zIndex) {
 		this.c = tempC
@@ -32,6 +35,8 @@ class Disc {
 
 let disc1
 let button
+let inputWidth
+let inputHeight
 let colorPicker
 
 function setup() {
@@ -44,6 +49,12 @@ function setup() {
 	button = createButton('Reset')
 	button.mousePressed(reset)
 
+	inputWidth = createInput('600')
+	inputWidth.changed(windowResized)
+
+	inputHeight = createInput('600')
+	inputHeight.changed(windowResized)
+
 	colorPicker = createColorPicker('#f15b2b')
 
 	sliderOutRadius = createSlider(1, 500, 250)
@@ -52,7 +63,7 @@ function setup() {
 	sliderDotRadius = createSlider(1, 20, 5)
 	sliderSpeed = createSlider(0.0000001, 0.00002, 0.00001, 0.00000001)
 
-	createCanvas(600, 600, WEBGL)
+	canvas = createCanvas(windWidth, windHeight, WEBGL)
 	//disc2 = new Disc(color(23, 21, 67), 200, 20, 300, 10, 0.000005, -10);
 }
 
@@ -72,6 +83,12 @@ function draw() {
 	//disc2.display();
 
 	time += timeset
+}
+
+function windowResized() {
+	windWidth = inputWidth.value()
+	windHeight = inputHeight.value()
+	resizeCanvas(windWidth, windHeight)
 }
 
 function saveImg() {
