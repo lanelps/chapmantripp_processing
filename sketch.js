@@ -1,3 +1,7 @@
+let time = 0
+let timeset = 10
+let isPaused = false
+
 class Disc {
 	constructor(tempC, outRadius, inRadius, noDots, dotRaidus, speed, zIndex) {
 		this.c = tempC
@@ -15,8 +19,7 @@ class Disc {
 		ellipseMode(RADIUS)
 
 		for (let i = 0; i < this.dotNumber; i++) {
-			let circle =
-				this.innerRaid + this.outerRaid * sin(millis() * this.freq * i)
+			let circle = this.innerRaid + this.outerRaid * sin(time * this.freq * i)
 			let col = map(circle, 250, 250, 100, 50)
 			let r = map(circle, 40, 50, this.dotRaid, this.dotRaid)
 			fill(this.c)
@@ -28,11 +31,20 @@ class Disc {
 }
 
 let disc1
-var button
+let button
+let colorPicker
 
 function setup() {
 	button = createButton('save image')
 	button.mousePressed(saveImg)
+
+	button = createButton('Play/Pause')
+	button.mousePressed(playPause)
+
+	button = createButton('Reset')
+	button.mousePressed(reset)
+
+	colorPicker = createColorPicker('#f15b2b')
 
 	sliderOutRadius = createSlider(1, 500, 250)
 	sliderInRadius = createSlider(1, 200, 30)
@@ -46,7 +58,7 @@ function setup() {
 
 function draw() {
 	disc1 = new Disc(
-		color(241, 91, 43),
+		color(colorPicker.value()),
 		sliderOutRadius.value(),
 		sliderInRadius.value(),
 		sliderNoDots.value(),
@@ -58,12 +70,27 @@ function draw() {
 	background(255, 255, 255)
 	disc1.display()
 	//disc2.display();
+
+	time += timeset
 }
 
 function saveImg() {
 	saveCanvas('chapmanTripp_screenshot.png')
 }
 
-// function mousePressed() {
-//   saveCanvas("chapmanTripp_screenshot.png");
-// }
+function playPause() {
+	if (isPaused) {
+		isPaused = false
+		timeset = 10
+	} else {
+		isPaused = true
+		timeset = 0
+	}
+}
+
+function reset() {
+	colorPicker.value('#f15b2b')
+	isPaused = false
+	timeset = 10
+	time = 0
+}
