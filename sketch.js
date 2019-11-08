@@ -42,26 +42,60 @@ let colorPicker
 function setup() {
 	button = createButton('save image')
 	button.mousePressed(saveImg)
+	button.addClass('save-image')
 
 	button = createButton('Play/Pause')
 	button.mousePressed(playPause)
+	button.addClass('play-pause')
 
 	button = createButton('Reset')
 	button.mousePressed(reset)
+	button.addClass('reset')
 
+	createElement('br', '')
+	createElement('br', '')
+
+	createElement('label', 'Width')
 	inputWidth = createInput('600')
 	inputWidth.changed(windowResized)
+	inputWidth.addClass('window-width')
 
+	createElement('label', 'Height')
 	inputHeight = createInput('600')
 	inputHeight.changed(windowResized)
+	inputHeight.addClass('window-height')
 
+	createElement('br', '')
+	createElement('br', '')
+
+	createElement('label', 'Color')
 	colorPicker = createColorPicker('#f15b2b')
+	colorPicker.addClass('color-picker')
+	createElement('br', '')
 
+	createElement('label', 'Outer Radius')
 	sliderOutRadius = createSlider(1, 500, 250)
+	sliderOutRadius.addClass('outer-radius')
+	createElement('br', '')
+
+	createElement('label', 'Inner Radius')
 	sliderInRadius = createSlider(1, 200, 30)
+	sliderInRadius.addClass('inner-radius')
+	createElement('br', '')
+
+	createElement('label', 'Dot Number')
 	sliderNoDots = createSlider(10, 1000, 200)
+	sliderNoDots.addClass('dot-number')
+	createElement('br', '')
+
+	createElement('label', 'Dot Size')
 	sliderDotRadius = createSlider(1, 20, 5)
+	sliderDotRadius.addClass('dot-size')
+	createElement('br', '')
+
+	createElement('label', 'Dot Speed')
 	sliderSpeed = createSlider(0.0000001, 0.00002, 0.00001, 0.00000001)
+	sliderSpeed.addClass('dot-speed')
 
 	canvas = createCanvas(windWidth, windHeight, WEBGL)
 	//disc2 = new Disc(color(23, 21, 67), 200, 20, 300, 10, 0.000005, -10);
