@@ -1,7 +1,9 @@
 import './style.css'
 import p5 from 'p5'
 
-export default function Sketchone() {
+const containerElement = document.getElementById('p-container')
+
+const sketch = p => {
 	class Disc {
 		constructor(tempC, outRadius, inRadius, noDots, dotRaidus, speed) {
 			this.c = tempC
@@ -12,21 +14,20 @@ export default function Sketchone() {
 			this.freq = speed
 		}
 
-		display(p5) {
-			p5.push()
-			p5.translate(windWidth / 2, windHeight / 2)
-			p5.ellipseMode(p5.RADIUS)
+		display(p) {
+			p.push()
+			p.translate(windWidth / 2, windHeight / 2)
+			p.ellipseMode(p.RADIUS)
 
 			for (let i = 0; i < this.dotNumber; i++) {
 				let circle =
-					this.innerRaid + this.outerRaid * p5.sin(time * this.freq * i)
-				//let col = p5.map(circle, 250, 250, 100, 50)
-				let r = p5.map(circle, 40, 50, this.dotRaid, this.dotRaid)
-				p5.fill(this.c)
-				p5.noStroke()
-				p5.ellipse(circle * p5.cos(i), circle * p5.sin(i), r, r)
+					this.innerRaid + this.outerRaid * p.sin(time * this.freq * i)
+				let r = p.map(circle, 40, 50, this.dotRaid, this.dotRaid)
+				p.fill(this.c)
+				p.noStroke()
+				p.ellipse(circle * p.cos(i), circle * p.sin(i), r, r)
 			}
-			p5.pop()
+			p.pop()
 		}
 	}
 
@@ -49,67 +50,67 @@ export default function Sketchone() {
 	let sliderDotRadius
 	let sliderSpeed
 
-	p5.setup = function() {
-		button = p5.createButton('Save Image')
-		button.mousePressed(p5.saveImg)
+	p.setup = function() {
+		button = p.createButton('Save Image')
+		button.mousePressed(p.saveImg)
 		button.addClass('save-image')
 
-		button = p5.createButton('Play/Pause')
-		button.mousePressed(p5.playPause)
+		button = p.createButton('Play/Pause')
+		button.mousePressed(p.playPause)
 		button.addClass('play-pause')
 
-		button = p5.createButton('Reset')
-		button.mousePressed(p5.reset)
+		button = p.createButton('Reset')
+		button.mousePressed(p.reset)
 		button.addClass('reset')
 
-		p5.createElement('br', '')
-		p5.createElement('br', '')
+		p.createElement('br', '')
+		p.createElement('br', '')
 
-		p5.createElement('label', 'Width')
-		inputWidth = p5.createInput('600')
-		inputWidth.changed(p5.windowResized)
+		p.createElement('label', 'Width')
+		inputWidth = p.createInput('600')
+		inputWidth.changed(p.windowResized)
 		inputWidth.addClass('window-width')
 
-		p5.createElement('label', 'Height')
-		inputHeight = p5.createInput('600')
-		inputHeight.changed(p5.windowResized)
+		p.createElement('label', 'Height')
+		inputHeight = p.createInput('600')
+		inputHeight.changed(p.windowResized)
 		inputHeight.addClass('window-height')
-		p5.createElement('br', '')
+		p.createElement('br', '')
 
-		p5.createElement('label', 'Color')
-		colorPicker = p5.createColorPicker('#f15b2b')
+		p.createElement('label', 'Color')
+		colorPicker = p.createColorPicker('#f15b2b')
 		colorPicker.addClass('color-picker')
-		p5.createElement('br', '')
+		p.createElement('br', '')
 
-		p5.createElement('label', 'Outer Radius')
-		sliderOutRadius = p5.createSlider(1, 500, 250)
+		p.createElement('label', 'Outer Radius')
+		sliderOutRadius = p.createSlider(1, 500, 250)
 		sliderOutRadius.addClass('outer-radius')
-		p5.createElement('br', '')
+		p.createElement('br', '')
 
-		p5.createElement('label', 'Inner Radius')
-		sliderInRadius = p5.createSlider(1, 200, 30)
+		p.createElement('label', 'Inner Radius')
+		sliderInRadius = p.createSlider(1, 200, 30)
 		sliderInRadius.addClass('inner-radius')
-		p5.createElement('br', '')
+		p.createElement('br', '')
 
-		p5.createElement('label', 'Dot Number')
-		sliderNoDots = p5.createSlider(10, 1000, 200)
+		p.createElement('label', 'Dot Number')
+		sliderNoDots = p.createSlider(10, 1000, 200)
 		sliderNoDots.addClass('dot-number')
-		p5.createElement('br', '')
+		p.createElement('br', '')
 
-		p5.createElement('label', 'Dot Size')
-		sliderDotRadius = p5.createSlider(1, 20, 5)
+		p.createElement('label', 'Dot Size')
+		sliderDotRadius = p.createSlider(1, 20, 5)
 		sliderDotRadius.addClass('dot-size')
-		p5.createElement('br', '')
+		p.createElement('br', '')
 
-		p5.createElement('label', 'Dot Speed')
-		sliderSpeed = p5.createSlider(0.0000001, 0.00002, 0.00001, 0.00000001)
+		p.createElement('label', 'Dot Speed')
+		sliderSpeed = p.createSlider(0.0000001, 0.00002, 0.00001, 0.00000001)
 		sliderSpeed.addClass('dot-speed')
-		p5.createElement('br', '')
+		p.createElement('br', '')
 
-		p5.createCanvas(windWidth, windHeight, p5.P3D)
+		p.createCanvas(windWidth, windHeight, p.P3D)
 	}
 
-	p5.draw = function() {
+	p.draw = function() {
 		disc1 = new Disc(
 			colorPicker.value(),
 			sliderOutRadius.value(),
@@ -119,23 +120,23 @@ export default function Sketchone() {
 			sliderSpeed.value()
 		)
 
-		p5.background(255)
-		disc1.display(p5)
+		p.background(255)
+		disc1.display(p)
 
 		time += timeset
 	}
 
-	p5.windowResized = () => {
+	p.windowResized = () => {
 		windWidth = inputWidth.value()
 		windHeight = inputHeight.value()
-		p5.resizeCanvas(windWidth, windHeight)
+		p.resizeCanvas(windWidth, windHeight)
 	}
 
-	p5.saveImg = () => {
-		p5.saveCanvas('chapmanTripp_screenshot.png')
+	p.saveImg = () => {
+		p.saveCanvas('chapmanTripp_screenshot.png')
 	}
 
-	p5.playPause = () => {
+	p.playPause = () => {
 		if (isPaused) {
 			isPaused = false
 			timeset = 10
@@ -145,10 +146,12 @@ export default function Sketchone() {
 		}
 	}
 
-	p5.reset = () => {
+	p.reset = () => {
 		colorPicker.value('#f15b2b')
 		isPaused = false
 		timeset = 10
 		time = 0
 	}
 }
+
+new p5(sketch, containerElement)
