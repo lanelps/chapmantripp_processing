@@ -4,6 +4,7 @@
 	"description": "",
 	"private": true,
 	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
 		"build": "webpack",
 		"dev": "webpack --watch --mode development"
 	},
@@ -19,7 +20,9 @@
 	},
 	"homepage": "https://github.com/lanelps/chapmantripp_processing#readme",
 	"devDependencies": {
+		"css-loader": "^3.2.0",
 		"p5": "^0.10.2",
+		"style-loader": "^1.0.0",
 		"webpack": "^4.41.2",
 		"webpack-cli": "^3.3.10"
 	}

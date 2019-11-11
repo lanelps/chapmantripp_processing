@@ -1,3 +1,4 @@
+import './style.css'
 import p5 from 'p5'
 
 export default function Sketchone() {
