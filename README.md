@@ -1,4 +1,4 @@
-# chapmantripp_processing
+# CT_processing
 
 Clone or Fork the repo  
 Run `npm i` in the terminal to install packages and node_modules   
